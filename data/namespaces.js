@@ -7,7 +7,6 @@ let wikiNs = new Namespace(0, 'Wiki', 'https://upload.wikimedia.org/wikipedia/en
 let mozNs = new Namespace(1, 'Mozilla', 'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.9c5e96634f92.png', '/mozilla');
 let linuxNs = new Namespace(2, 'Linux', 'https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png', '/linux');
 
-namespaces.push(wikiNs, mozNs, linuxNs);
 
 wikiNs.addRoom(new Room(0, 'New Articles', 'Wiki'));
 wikiNs.addRoom(new Room(1, 'Editors', 'Wiki'));
@@ -22,5 +21,7 @@ linuxNs.addRoom(new Room(0, 'Debian', 'Linux'));
 linuxNs.addRoom(new Room(1, 'Red Hat', 'Linux'));
 linuxNs.addRoom(new Room(2, 'MacOs', 'Linux'));
 linuxNs.addRoom(new Room(3, 'Kernal Development', 'Linux'));
+
+namespaces.push(wikiNs, mozNs, linuxNs);
 
 module.exports = namespaces;
