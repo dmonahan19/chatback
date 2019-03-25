@@ -1,5 +1,19 @@
 const socket = io('http://localhost:9000');
-const socket2 = io('http://localhost:9000/admin'); 
+
+socket.on('nsList', (nsData) => {
+    console.log("the list of namespaces has arrived");
+    let namespacesDiv = document.querySelector('.namespaces'); 
+    namespacesDiv.innerHTML = "";
+    nsData.forEach((ns) => {
+        namespacesDiv.innerHTML += `<div class="namespace" ns=${ns.endpoint}><img src="${ns.img}" /></div>`
+    });
+    Array.from(document.getElementsByClassName("namespace")).forEach((element) => {
+        element.addEventListener('click', (e) => {
+            const nsEndpoint = element.getAttribute('ns');
+            console.log(`${nsEndpoint} I should go to now`);
+        });
+    });
+});
 
 socket.on('messageFromServer', (dataFromServer) => {
     console.log(dataFromServer);
@@ -10,9 +24,6 @@ socket.on('joined', (msg) => {
     console.log(msg);
 });
 
-socket2.on('welcome', (dataFromServer) => {
-    console.log(dataFromServer);
-});
 
 document.querySelector('#message-form').addEventListener('submit', (event) => {
     event.preventDefault();
