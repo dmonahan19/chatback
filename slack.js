@@ -1,9 +1,11 @@
+// serverside
 const express = require('express');
 const app = express();
 const socketio = require('socket.io');
 
 let namespaces = require('./data/namespaces');
 
+//creates middleware and it sets up a static folder for us to serve up
 app.use(express.static(__dirname + '/public'));
 const expressServer = app.listen(9000);
 //build socket server
@@ -23,6 +25,7 @@ io.on('connection', (socket) => {
 namespaces.forEach((namespace) => {
     io.of(namespace.endpoint).on('connection', (nsSocket) => {
         const username = nsSocket.handshake.query.username;
+
         nsSocket.emit('nsRoomLoad', namespace.rooms);
         nsSocket.on('joinRoom', (roomToJoin, numberOfUsersCallback) => {
             const roomToLeave = Object.keys(nsSocket.rooms)[1];
@@ -35,6 +38,7 @@ namespaces.forEach((namespace) => {
             nsSocket.emit('historyCatchUp', nsRoom.history); 
             updateUsersInRoom(namespace, roomToJoin);
         });
+
         nsSocket.on('newMessageToServer', (msg) => {
             const fullMsg = {
                 text: msg.text,
